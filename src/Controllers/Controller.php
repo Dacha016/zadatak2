@@ -31,8 +31,9 @@ class Controller{
                 array_push($inArr,$in);
             }
         echo json_encode($inArr);
-        // // $response['body'] = json_encode($in);
-        // // return $response;
+        $response['status_code_header'] = 'HTTP/1.1 201 Created';
+        $response['body'] = json_encode($in);
+        return $response;
          }
     }
 
@@ -43,6 +44,9 @@ class Controller{
         }
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
          $row= $result->fetch(PDO::FETCH_ASSOC);
+         if (! $row) {
+            return $this->notFoundResponse();
+        }
          $in=[
             "id"=>$row["id"],
             "Name"=>$row["Name"],
@@ -50,18 +54,20 @@ class Controller{
             "idG"=>$row["idG"]
         ];
         echo json_encode($in);
-        // $response['body'] = json_encode($in);
-        // return $response;
+        $response['status_code_header'] = 'HTTP/1.1 201 Created';
+        $response['body'] = json_encode($in);
+        return $response;
     }
 
-    public function create()
+    public function store()
     {
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
         if (! $this->validate( $input)) {
             return $this->unprocessableEntityResponse();
         }
-        $res=$this->person->create($input);
+        $this->person->create($input);
         
+       
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
         
         return $response;
@@ -73,7 +79,7 @@ class Controller{
             return $this->notFoundResponse();
         }
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
-        if (! $this->validate($input)) {
+        if ( !$this->validate($input)) {
             return $this->unprocessableEntityResponse();
         }
         $this->person->update($personId, $input);
@@ -96,20 +102,22 @@ class Controller{
     }
 
     private function validate($input){
-        if (! isset($input['Name'])) {
+        var_dump($input);
+        if (! isset($input['Name']) || $input['Name']==="" || $input['Name']=== null) {
             return false;
         }
-        if (! isset($input['Surname'])) {
+        if (! isset($input['Surname']) || $input['Surname'] ==="" ||$input['Surname'] === null ) {
             return false;
         }
-        if (! isset($input['idG'])) {
+        if (! isset($input['idG']) || $input['idG']==="" || $input['idG']===null || !is_int($input['idG'])) {
             return false;
         }
-
         return true;
     }
 
     private function unprocessableEntityResponse(){
+        
+         http_response_code(422);
         $response['status_code_header'] = 'HTTP/1.1 422 Unprocessable Entity';
         $response['body'] = json_encode([
             'error' => 'Invalid input'
@@ -118,6 +126,7 @@ class Controller{
     }
 
     private function notFoundResponse(){
+        http_response_code(404);
         $response['status_code_header'] = 'HTTP/1.1 404 Not Found';
         $response['body'] = null;
         return $response;

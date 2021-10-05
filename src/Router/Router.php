@@ -49,7 +49,17 @@ class Router{
         if( $uri[count($uri) - 1]==="listing"){
             $uri='/' . $uri[count($uri) - 2].'/'.$uri[count($uri)-1];
             $route=$route[$requestMethod][$uri]; 
-            
+           
+            $routeName= explode("@",$route);
+            $className=$routeName[count($routeName)-2];
+            $methodName=$routeName[count($routeName)-1];
+            $object = new $className($db,$requestMethod,$personId);
+            return $object->{$methodName}();
+        }
+        if( $uri[count($uri) - 1]==="create" ){
+            $uri='/' . $uri[count($uri) - 2].'/'.$uri[count($uri)-1];
+            $route=$route[$requestMethod][$uri]; 
+            var_dump($route);
             $routeName= explode("@",$route);
             $className=$routeName[count($routeName)-2];
             $methodName=$routeName[count($routeName)-1];
