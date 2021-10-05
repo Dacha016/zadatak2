@@ -32,9 +32,9 @@ class Router{
                 "/mentors/id"=>"App\Controllers\MentorController@destroy",
                 "/groups/id"=>"App\Controllers\GroupController@destroy"]
             ];
+            
         $requestMethod =strtoupper ($_SERVER["REQUEST_METHOD"]);
         $uri = explode('/', $_SERVER['REQUEST_URI']);
-        var_dump($_SERVER['REQUEST_URI']);
         $personId= isset($_GET["id"]) ? (int)$_GET["id"]:null;
         if($personId !== null){
             $uriq = explode("?",$uri[count($uri) - 1]);
@@ -45,17 +45,27 @@ class Router{
             $methodName=$routeName[count($routeName)-1];
             $object = new $className($db,$requestMethod,$personId);
             return $object->{$methodName}($personId);
-        }if( $uri[count($uri) - 1]==="listing"){
+        }
+        if( $uri[count($uri) - 1]==="listing"){
             $uri='/' . $uri[count($uri) - 2].'/'.$uri[count($uri)-1];
             $route=$route[$requestMethod][$uri]; 
-            var_dump($uri);
+            
+            $routeName= explode("@",$route);
+            $className=$routeName[count($routeName)-2];
+            $methodName=$routeName[count($routeName)-1];
+            $object = new $className($db,$requestMethod,$personId);
+            return $object->{$methodName}();
+        }
+        if(isset($_GET["page"])){
+            $uriq = explode("?",$uri[count($uri) - 1]);
+            $uri='/' . $uri[count($uri) - 2].'/'.$uriq[count($uriq)-2];
+            $route=$route[$requestMethod][$uri]; 
             $routeName= explode("@",$route);
             $className=$routeName[count($routeName)-2];
             $methodName=$routeName[count($routeName)-1];
             $object = new $className($db,$requestMethod,$personId);
             return $object->{$methodName}($personId);
-        }
-        else{
+        }else{
             $uri = '/' . $uri[count($uri)-1];
             $route=$route[$requestMethod][$uri];
             $routeName= explode("@",$route);
@@ -64,8 +74,6 @@ class Router{
             $object = new $className($db,$requestMethod,$personId);
             return $object->{$methodName}();
         }
-      
-            
     }
 }
 ?>
