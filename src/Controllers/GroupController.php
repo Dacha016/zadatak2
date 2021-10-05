@@ -16,16 +16,17 @@ class GroupController extends Controller{
         $result = $this->person->groupListing();
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $n=$result->rowCount();
+        
         if($n>0){
             $inArr=[];
             while($row= $result->fetch(\PDO::FETCH_ASSOC)){
                 extract($row);
                 $in=[
-                    "Groups_Title"=>$row["g.Title"],
-                    "Mentors_Name"=>$row["m.Name"],
-                    "Mentors_Surname"=>$row["m.Surname"],
-                    "Interns_Name"=>$row["i.Name"],
-                    "Interns_Surname"=>$row["i.Surname"]
+                    "Groups_Title"=>$row["Groups_Title"],
+                    "Mentors_Name"=>$row["Mentors_Name"],
+                    "Mentors_Surname"=>$row["Mentors_Surname"],
+                    "Interns_Name"=>$row["Interns_Name"],
+                    "Interns_Surname"=>$row["Interns_Surname"]
                     
                 ];
                 array_push($inArr,$in);
