@@ -1,5 +1,6 @@
 <?php
 namespace App\Models;
+use PDOException;
 abstract class Model {
 // methods
     public function read($id){
@@ -10,7 +11,7 @@ abstract class Model {
             $stmt->bindParam(":id",$id);
             $stmt->execute();
             return $stmt;
-        }catch(\PDOException $e){
+        }catch(PDOException $e){
             exit($e->getMessage());
         }
     }
@@ -24,7 +25,7 @@ abstract class Model {
             $stmt->execute();
            
             return $stmt;
-        }catch(\PDOException $e){
+        }catch(PDOException $e){
             exit($e->getMessage());
         }
     }
@@ -37,7 +38,7 @@ abstract class Model {
             $stmt->bindParam(":idG",$p["idG"]);
             $stmt->execute();
             return $stmt;
-        }catch(\PDOException $e){
+        }catch(PDOException $e){
             exit($e->getMessage());
         }
     }
@@ -51,7 +52,7 @@ abstract class Model {
             $stmt->bindParam(":id",$id);
             $stmt->execute();
             return $stmt;
-        }catch(\PDOException $e){
+        }catch(PDOException $e){
             exit($e->getMessage());
         }
     }
@@ -62,7 +63,7 @@ abstract class Model {
             $stmt->bindParam(":id",$id);
             $stmt->execute();
             return $stmt;
-        }catch(\PDOException $e){
+        }catch(PDOException $e){
             exit($e->getMessage());
         }
     }

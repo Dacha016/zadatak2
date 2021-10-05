@@ -1,6 +1,6 @@
 <?php
 namespace App\Controllers;
-
+use PDO;
 class Controller{
     protected $person;
     public function __construct( $person=null){
@@ -20,7 +20,7 @@ class Controller{
         $n=$result->rowCount();
         if($n>0){
             $inArr=[];
-            while($row= $result->fetch(\PDO::FETCH_ASSOC)){
+            while($row= $result->fetch(PDO::FETCH_ASSOC)){
                 extract($row);
                 $in=[
                     "id"=>$row["id"],
@@ -42,7 +42,7 @@ class Controller{
             return $this->notFoundResponse();
         }
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
-         $row= $result->fetch(\PDO::FETCH_ASSOC);
+         $row= $result->fetch(PDO::FETCH_ASSOC);
          $in=[
             "id"=>$row["id"],
             "Name"=>$row["Name"],
@@ -84,7 +84,7 @@ class Controller{
 
     public function delete($personId){
         $result = $this->person->read($personId);
-        $row= $result->fetch(\PDO::FETCH_ASSOC);
+        $row= $result->fetch(PDO::FETCH_ASSOC);
         if (! $row) {
             return $this->notFoundResponse();
             

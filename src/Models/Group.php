@@ -1,7 +1,8 @@
 <?php
 namespace App\Models;
 use App\Models\Model;
-
+use PDO;
+use PDOException;
 class Group extends Model{
     protected $conn;
     protected $table="Groups";
@@ -19,7 +20,7 @@ class Group extends Model{
             $stmt->execute();
            
             return $stmt;
-        }catch(\PDOException $e){
+        }catch(PDOException $e){
             exit($e->getMessage());
         }
     }
@@ -32,7 +33,7 @@ public  function create(Array $p){
         $stmt->bindParam(":title",$p["Title"]);
         $stmt->execute();
         return $stmt;
-    }catch(\PDOException $e){
+    }catch(PDOException $e){
         exit($e->getMessage());
     }
 }
@@ -45,7 +46,7 @@ public function update($id, Array $p){
         $stmt->execute();
     
         return $stmt;
-    }catch(\PDOException $e){
+    }catch(PDOException $e){
         exit($e->getMessage());
     }
 }
@@ -63,12 +64,12 @@ public function groupListing(){
     var_dump($q);
     try{
         $stmt=$this->conn->prepare($q);
-        $stmt->bindParam(':limit', $limit, \PDO::PARAM_INT);
-        $stmt->bindParam(':offset', $offset, \PDO::PARAM_INT);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
        
         return $stmt;
-    }catch(\PDOException $e){
+    }catch(PDOException $e){
         exit($e->getMessage());
     }
     

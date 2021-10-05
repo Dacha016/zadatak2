@@ -1,6 +1,7 @@
 <?php
 namespace App\Config;
  use PDO;
+ use PDOException;
 class Connection {
     protected $host ="localhost";
     protected $user="root";
@@ -12,7 +13,7 @@ class Connection {
         try{
             $this->conn = new PDO("mysql:host=".$this->host.";dbname=".$this->dbName, $this->user,$this->pass);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-        }catch(\PDOException $e){
+        }catch(PDOException $e){
             return false;
         }
         return $this->conn;  

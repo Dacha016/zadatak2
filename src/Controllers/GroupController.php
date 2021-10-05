@@ -1,5 +1,6 @@
 <?php
 namespace App\Controllers;
+use PDO;
 use App\Controllers\Controller;
 use App\Models\Group;
 class GroupController extends Controller{
@@ -42,7 +43,7 @@ class GroupController extends Controller{
         $n=$result->rowCount();
         if($n>0){
             $inArr=[];
-            while($row= $result->fetch(\PDO::FETCH_ASSOC)){
+            while($row= $result->fetch(PDO::FETCH_ASSOC)){
                 extract($row);
                 $in=[
                     "id"=>$row["id"],
@@ -61,7 +62,7 @@ class GroupController extends Controller{
            return $this->notFoundResponse();
        }
        $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $row= $result->fetch(\PDO::FETCH_ASSOC);
+        $row= $result->fetch(PDO::FETCH_ASSOC);
         $in=[
             "id"=>$row["id"],
             "Title"=>$row["Title"]
