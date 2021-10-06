@@ -25,7 +25,6 @@ class Group extends Model{
         $q="INSERT INTO ".$this->table. " (Title) VALUES (:title )";
         try{
             $stmt=$this->conn->prepare($q);
-            print_r($stmt);
             $stmt->bindParam(":title",$p["Title"]);
             $stmt->execute();
             return $stmt;
@@ -51,7 +50,7 @@ class Group extends Model{
         $pages = ceil($total / $limit);
         $page =(int)  min($pages, filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT, array('default'   => 1)));
         $offset = abs($page - 1)  * $limit;
-        $q="SELECT g.Title AS Groups_Title, m.Name AS Mentors_Name, m.Surname AS Mentors_Surname,i.Name AS Interns_Name,i.Surname AS Interns_Surname FROM ". $this->table."  g LEFT JOIN Mentors m ON g.id=m.idG LEFT JOIN Interns i ON g.id=i.idG ORDER BY g.Title LIMIT :limit OFFSET :offset";
+        $q="SELECT g.Title AS Groups_Title, m.Name AS Mentors_Name, m.Surname AS Mentors_Surname,i.Name AS Interns_Name,i.Surname AS Interns_Surname FROM ". $this->table."  g LEFT JOIN mentors m ON g.id=m.idG LEFT JOIN interns i ON g.id=i.idG ORDER BY g.Title LIMIT :limit OFFSET :offset";
         try{
             $stmt=$this->conn->prepare($q);
             $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);

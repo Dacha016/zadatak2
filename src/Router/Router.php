@@ -20,7 +20,8 @@ class Router{
             "POST"=>[
                 "/interns"=>"App\Controllers\InternController@store",
                 "/mentors"=>"App\Controllers\MentorController@store",
-                "/groups"=>"App\Controllers\GroupController@store"
+                "/groups"=>"App\Controllers\GroupController@store",
+                "/comment"=>"App\Controllers\CommentController@store"
              ],
             "PUT"=>[
                 "/interns/id"=>"App\Controllers\InternController@update",
