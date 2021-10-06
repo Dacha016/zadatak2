@@ -5,7 +5,7 @@ use PDO;
 use PDOException;
 class Group extends Model{
     protected $conn;
-    protected $table="Groups";
+    protected $table="groups";
 
     public function __construct($db){
         $this->conn=$db;

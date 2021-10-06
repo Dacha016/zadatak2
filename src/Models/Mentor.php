@@ -4,9 +4,9 @@ use App\Models\Model;
 use PDOException;
 class Mentor extends Model{
     protected $conn;
-    protected $table="Mentors";
+    protected $table="mentors";
     
-// //konstruktor
+//constructor
     public function __construct($db){
         $this->conn=$db;
     }

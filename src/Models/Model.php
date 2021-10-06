@@ -8,9 +8,7 @@ abstract class Model {
         $q="SELECT * FROM ".$this->table ;
         try{
             $stmt=$this->conn->prepare($q);
-        
             $stmt->execute();
-           
             return $stmt;
         }catch(PDOException $e){
             exit($e->getMessage());

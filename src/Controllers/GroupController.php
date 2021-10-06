@@ -6,20 +6,17 @@ use App\Models\Group;
 class GroupController extends Controller{
     public $db;
     protected $requestMethod;
-    protected  $personId;
+    protected  $modelId;
  
-    public function __construct($db,$requestMethod,$personId){
+    public function __construct($db,$requestMethod,$modelId){
        parent::__construct(new Group($db));
        $this->requestMethod = $requestMethod;
-       $this->personId = $personId;
-     
+       $this->modelId = $modelId;
     } 
     
     public function listing(){
-        $result = $this->person->groupListing();
-       
+        $result = $this->model->groupListing();
         $n=$result->rowCount();
-        
         if($n>0){
             $inArr=[];
             while($row= $result->fetch(\PDO::FETCH_ASSOC)){
@@ -30,20 +27,16 @@ class GroupController extends Controller{
                     "Mentors_Surname"=>$row["Mentors_Surname"],
                     "Interns_Name"=>$row["Interns_Name"],
                     "Interns_Surname"=>$row["Interns_Surname"]
-                    
                 ];
                 array_push($inArr,$in);
             }
-        echo json_encode($inArr);
-        $response['body'] = json_encode($in);
+        echo $response['body'] = json_encode($inArr);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         return $response;
          }
     }
     public function index(){
-
-        $result = $this->person->readAll();
-        
+        $result = $this->model->readAll();
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $n=$result->rowCount();
         if($n>0){
@@ -56,14 +49,13 @@ class GroupController extends Controller{
                 ];
                 array_push($inArr,$in);
             }
-        echo json_encode($inArr);
-        $response['body'] = json_encode($in);
+        echo $response['body'] = json_encode($inArr);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         return $response;
          }
     }
-    public function show($personId){
-        $result = $this->person->read($personId);
+    public function show($modelId){
+        $result = $this->model->read($modelId);
         if (! $result) {
            return $this->notFoundResponse();
        }
@@ -72,8 +64,7 @@ class GroupController extends Controller{
             "id"=>$row["id"],
             "Title"=>$row["Title"]
        ];
-       echo json_encode($in);
-       $response['body'] = json_encode($in);
+       echo $response['body'] = json_encode($in);
        $response['status_code_header'] = 'HTTP/1.1 200 OK';
        return $response;
    }
@@ -84,5 +75,4 @@ class GroupController extends Controller{
         }
         return true;
     }
-
 }

@@ -2,17 +2,15 @@
 namespace App\Controllers;
 use PDO;
 class Controller{
-    protected $person;
-    public function __construct( $person=null){
-        if($person !== null){
-            $this->person=$person;
+    protected $model;
+    public function __construct( $model=null){
+        if($model !== null){
+            $this->model=$model;
          }
     }
    
     public function index(){
-
-        $result = $this->person->readAll();
-        
+        $result = $this->model->readAll();
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $n=$result->rowCount();
         if($n>0){
@@ -27,15 +25,14 @@ class Controller{
                 ];
                 array_push($inArr,$in);
             }
-        echo json_encode($inArr);
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
-        $response['body'] = json_encode($in);
+        echo $response['body'] = json_encode($inArr);
         return $response;
          }
     }
 
-    public function show($personId){
-         $result = $this->person->read($personId);
+    public function show($modelId){
+         $result = $this->model->read($modelId);
          if (! $result) {
             return $this->notFoundResponse();
         }
@@ -49,9 +46,8 @@ class Controller{
             "Mentors_Name"=>$row["Mentors_Name"],
             "Groups_Title"=>$row["Groups_Title"]
         ];
-        echo json_encode($in);
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
-        $response['body'] = json_encode($in);
+        echo $response['body'] = json_encode($in);
         return $response;
     }
 
@@ -61,13 +57,13 @@ class Controller{
         if (! $this->validate( $input)) {
             return $this->unprocessableEntityResponse();
         }
-        $this->person->create($input);
+        $this->model->create($input);
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
         return $response;
     }
 
-    public function update($personId){
-        $result = $this->person->read($personId);
+    public function update($modelId){
+        $result = $this->model->read($modelId);
         if (! $result) {
             return $this->notFoundResponse();
         }
@@ -75,20 +71,19 @@ class Controller{
         if ( !$this->validate($input)) {
             return $this->unprocessableEntityResponse();
         }
-        $this->person->update($personId, $input);
+        $this->model->update($modelId, $input);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = null;
         return $response;
     }
 
-    public function delete($personId){
-        $result = $this->person->read($personId);
+    public function delete($modelId){
+        $result = $this->model->read($modelId);
         $row= $result->fetch(PDO::FETCH_ASSOC);
         if (! $row) {
             return $this->notFoundResponse();
-            
         }else{
-            $this->person->delete($personId);
+            $this->model->delete($modelId);
             $response['status_code_header'] = 'HTTP/1.1 200 OK';
         }
         return $response;

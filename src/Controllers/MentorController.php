@@ -6,14 +6,14 @@ use PDO;
 class MentorController extends Controller{
     public $db;
     protected $requestMethod;
-    protected  $personId;
-    public function __construct($db,$requestMethod,$personId){
+    protected  $modelId;
+    public function __construct($db,$requestMethod,$modelId){
        parent::__construct(new Mentor($db));
        $this->requestMethod = $requestMethod;
-       $this->personId = $personId;
+       $this->modelId = $modelId;
     } 
-    public function show($personId){
-        $result = $this->person->read($personId);
+    public function show($modelId){
+        $result = $this->model->read($modelId);
         if (! $result) {
            return $this->notFoundResponse();
        }
@@ -27,9 +27,8 @@ class MentorController extends Controller{
            "Mentors_Name"=>$row["Mentors_Name"],
            "Groups_Title"=>$row["Groups_Title"]
        ];
-       echo json_encode($in);
        $response['status_code_header'] = 'HTTP/1.1 201 Created';
-       $response['body'] = json_encode($in);
+       echo $response['body'] = json_encode($in);
        return $response;
    }
 }
