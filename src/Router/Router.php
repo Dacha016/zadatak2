@@ -39,13 +39,12 @@ class Router{
             $uri = explode("?",$uri);
             $uri=$uri[count($uri) - 2];   
         }           
-            $route=$route[$requestMethod][$uri];
-            $routeName= explode("@",$route);
-            $className=$routeName[count($routeName)-2];
-            $methodName=$routeName[count($routeName)-1];
-            $object = new $className($db,$requestMethod,$personId);
-            return $object->{$methodName}($personId);
-        
+        $route=$route[$requestMethod][$uri];
+        $routeName= explode("@",$route);
+        $className=$routeName[count($routeName)-2];
+        $methodName=$routeName[count($routeName)-1];
+        $object = new $className($db,$requestMethod,$personId);
+        return $object->{$methodName}($personId);
     }
 }
 ?>

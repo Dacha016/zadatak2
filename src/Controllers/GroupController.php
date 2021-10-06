@@ -17,7 +17,7 @@ class GroupController extends Controller{
     
     public function listing(){
         $result = $this->person->groupListing();
-        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+       
         $n=$result->rowCount();
         
         if($n>0){
@@ -35,8 +35,9 @@ class GroupController extends Controller{
                 array_push($inArr,$in);
             }
         echo json_encode($inArr);
-        // // $response['body'] = json_encode($in);
-        // // return $response;
+        $response['body'] = json_encode($in);
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        return $response;
          }
     }
     public function index(){
@@ -56,8 +57,9 @@ class GroupController extends Controller{
                 array_push($inArr,$in);
             }
         echo json_encode($inArr);
-        // // $response['body'] = json_encode($in);
-        // // return $response;
+        $response['body'] = json_encode($in);
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        return $response;
          }
     }
     public function show($personId){
@@ -65,15 +67,15 @@ class GroupController extends Controller{
         if (! $result) {
            return $this->notFoundResponse();
        }
-       $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $row= $result->fetch(PDO::FETCH_ASSOC);
         $in=[
             "id"=>$row["id"],
             "Title"=>$row["Title"]
        ];
        echo json_encode($in);
-       // $response['body'] = json_encode($in);
-       // return $response;
+       $response['body'] = json_encode($in);
+       $response['status_code_header'] = 'HTTP/1.1 200 OK';
+       return $response;
    }
    private function notFoundResponse(){
     $response['status_code_header'] = 'HTTP/1.1 404 Not Found';

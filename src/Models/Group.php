@@ -50,9 +50,7 @@ class Group extends Model{
         $limit = 2;
         $pages = ceil($total / $limit);
         $page =(int)  min($pages, filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT, array('default'   => 1)));
-        var_dump($page);
         $offset = abs($page - 1)  * $limit;
-        var_dump($offset);
         $q="SELECT g.Title AS Groups_Title, m.Name AS Mentors_Name, m.Surname AS Mentors_Surname,i.Name AS Interns_Name,i.Surname AS Interns_Surname FROM ". $this->table."  g LEFT JOIN Mentors m ON g.id=m.idG LEFT JOIN Interns i ON g.id=i.idG ORDER BY g.Title LIMIT :limit OFFSET :offset";
         try{
             $stmt=$this->conn->prepare($q);

@@ -4,12 +4,9 @@ use PDO;
 class Controller{
     protected $person;
     public function __construct( $person=null){
-       
         if($person !== null){
             $this->person=$person;
-          
          }
-        
     }
    
     public function index(){
@@ -66,10 +63,7 @@ class Controller{
             return $this->unprocessableEntityResponse();
         }
         $this->person->create($input);
-        
-       
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
-        
         return $response;
     }
 
@@ -102,8 +96,7 @@ class Controller{
     }
 
     private function validate($input){
-        var_dump($input);
-        if (! isset($input['Name']) || $input['Name']==="" || $input['Name']=== null) {
+        if (! isset($input['Name']) || $input['Name']==="" || $input['Name']=== null || ! isset($input['Title']) || $input['Title']==="" || $input['Title']=== null) {
             return false;
         }
         if (! isset($input['Surname']) || $input['Surname'] ==="" ||$input['Surname'] === null ) {
@@ -116,8 +109,7 @@ class Controller{
     }
 
     private function unprocessableEntityResponse(){
-        
-         http_response_code(422);
+        http_response_code(422);
         $response['status_code_header'] = 'HTTP/1.1 422 Unprocessable Entity';
         $response['body'] = json_encode([
             'error' => 'Invalid input'
