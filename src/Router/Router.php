@@ -40,7 +40,6 @@ class Router{
             $uri=$uri[count($uri) - 2];   
         }           
         $route=$route[$requestMethod][$uri];
-        var_dump($route);
         $routeName= explode("@",$route);
         $className=$routeName[count($routeName)-2];
         $methodName=$routeName[count($routeName)-1];

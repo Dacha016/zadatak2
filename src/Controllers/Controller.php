@@ -90,11 +90,13 @@ class Controller{
     }
 
     protected function validate($input){
-        if (! isset($input['Name']) || $input['Name']==="" || $input['Name']=== null ) {
+        if (! isset($input['Name']) || $input['Name']==="" || $input['Name']=== null || !ctype_alpha($input['Name']) ) {
             return false;
-        }elseif (! isset($input['Surname']) || $input['Surname'] ==="" ||$input['Surname'] === null ) {
+        }
+        if (! isset($input['Surname']) || $input['Surname'] ==="" ||$input['Surname'] === null || !ctype_alpha($input['Surname'] )){
             return false;
-        }elseif (! isset($input['idG']) || $input['idG']==="" || $input['idG']===null || !is_int($input['idG'])) {
+        }
+        if (! isset($input['idG']) || $input['idG']==="" || $input['idG']===null || !is_int($input['idG'])) {
             return false;
         }
         return true;

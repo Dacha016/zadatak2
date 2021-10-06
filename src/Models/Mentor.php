@@ -15,7 +15,7 @@ class Mentor extends Model{
         
         try{
             $stmt=$this->conn->prepare($q);
-            $stmt->bindParam(":id",$id);
+            $stmt->bindParam(":id",trim($id));
             $stmt->execute();
             return $stmt;
         }catch(PDOException $e){
