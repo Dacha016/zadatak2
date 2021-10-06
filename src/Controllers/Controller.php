@@ -45,10 +45,9 @@ class Controller{
             return $this->notFoundResponse();
         }
          $in=[
-            "id"=>$row["id"],
-            "Name"=>$row["Name"],
-            "Surname"=>$row["Surname"],
-            "idG"=>$row["idG"]
+            "Mentors_Surname"=>$row["Mentors_Surname"],
+            "Mentors_Name"=>$row["Mentors_Name"],
+            "Groups_Title"=>$row["Groups_Title"]
         ];
         echo json_encode($in);
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
@@ -95,20 +94,18 @@ class Controller{
         return $response;
     }
 
-    private function validate($input){
-        if (! isset($input['Name']) || $input['Name']==="" || $input['Name']=== null || ! isset($input['Title']) || $input['Title']==="" || $input['Title']=== null) {
+    protected function validate($input){
+        if (! isset($input['Name']) || $input['Name']==="" || $input['Name']=== null ) {
             return false;
-        }
-        if (! isset($input['Surname']) || $input['Surname'] ==="" ||$input['Surname'] === null ) {
+        }elseif (! isset($input['Surname']) || $input['Surname'] ==="" ||$input['Surname'] === null ) {
             return false;
-        }
-        if (! isset($input['idG']) || $input['idG']==="" || $input['idG']===null || !is_int($input['idG'])) {
+        }elseif (! isset($input['idG']) || $input['idG']==="" || $input['idG']===null || !is_int($input['idG'])) {
             return false;
         }
         return true;
     }
 
-    private function unprocessableEntityResponse(){
+    protected function unprocessableEntityResponse(){
         http_response_code(422);
         $response['status_code_header'] = 'HTTP/1.1 422 Unprocessable Entity';
         $response['body'] = json_encode([
@@ -117,7 +114,7 @@ class Controller{
         return $response;
     }
 
-    private function notFoundResponse(){
+    protected function notFoundResponse(){
         http_response_code(404);
         $response['status_code_header'] = 'HTTP/1.1 404 Not Found';
         $response['body'] = null;

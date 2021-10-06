@@ -18,9 +18,9 @@ class Router{
                 "/groups/listing"=>"App\Controllers\GroupController@listing"
                 ],
             "POST"=>[
-                "/interns/create"=>"App\Controllers\InternController@store",
-                "/mentors/create"=>"App\Controllers\MentorController@store",
-                "/groups/create"=>"App\Controllers\GroupController@store"
+                "/interns"=>"App\Controllers\InternController@store",
+                "/mentors"=>"App\Controllers\MentorController@store",
+                "/groups"=>"App\Controllers\GroupController@store"
              ],
             "PUT"=>[
                 "/interns/id"=>"App\Controllers\InternController@update",

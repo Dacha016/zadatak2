@@ -77,9 +77,12 @@ class GroupController extends Controller{
        $response['status_code_header'] = 'HTTP/1.1 200 OK';
        return $response;
    }
-   private function notFoundResponse(){
-    $response['status_code_header'] = 'HTTP/1.1 404 Not Found';
-    $response['body'] = null;
-    return $response;
+  
+    protected function validate($input){
+        if( ! isset($input['Title']) || $input['Title']==="" || $input['Title']=== null ){
+            return false;
+        }
+        return true;
     }
+
 }
