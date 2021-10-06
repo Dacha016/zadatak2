@@ -20,7 +20,7 @@ class Router{
             "POST"=>[
                 "/interns/create"=>"App\Controllers\InternController@store",
                 "/mentors/create"=>"App\Controllers\MentorController@store",
-                "/interns/create"=>"App\Controllers\GroupController@store"
+                "/groups/create"=>"App\Controllers\GroupController@store"
              ],
             "PUT"=>[
                 "/interns/id"=>"App\Controllers\InternController@update",
@@ -32,58 +32,20 @@ class Router{
                 "/mentors/id"=>"App\Controllers\MentorController@destroy",
                 "/groups/id"=>"App\Controllers\GroupController@destroy"]
             ];
-            
         $requestMethod =strtoupper ($_SERVER["REQUEST_METHOD"]);
-        $uri = explode('/', $_SERVER['REQUEST_URI']);
+        $uri=$_SERVER['REQUEST_URI'];
         $personId= isset($_GET["id"]) ? (int)$_GET["id"]:null;
-        if($personId !== null){
-            $uriq = explode("?",$uri[count($uri) - 1]);
-            $uri='/' . $uri[count($uri) - 2].'/'.$uriq[count($uriq)-2];
-            $route=$route[$requestMethod][$uri]; 
-            $routeName= explode("@",$route);
-            $className=$routeName[count($routeName)-2];
-            $methodName=$routeName[count($routeName)-1];
-            $object = new $className($db,$requestMethod,$personId);
-            return $object->{$methodName}($personId);
-        }
-        if( $uri[count($uri) - 1]==="listing"){
-            $uri='/' . $uri[count($uri) - 2].'/'.$uri[count($uri)-1];
-            $route=$route[$requestMethod][$uri]; 
-           
-            $routeName= explode("@",$route);
-            $className=$routeName[count($routeName)-2];
-            $methodName=$routeName[count($routeName)-1];
-            $object = new $className($db,$requestMethod,$personId);
-            return $object->{$methodName}();
-        }
-        if( $uri[count($uri) - 1]==="create" ){
-            $uri='/' . $uri[count($uri) - 2].'/'.$uri[count($uri)-1];
-            $route=$route[$requestMethod][$uri]; 
-            var_dump($route);
-            $routeName= explode("@",$route);
-            $className=$routeName[count($routeName)-2];
-            $methodName=$routeName[count($routeName)-1];
-            $object = new $className($db,$requestMethod,$personId);
-            return $object->{$methodName}();
-        }
-        if(isset($_GET["page"])){
-            $uriq = explode("?",$uri[count($uri) - 1]);
-            $uri='/' . $uri[count($uri) - 2].'/'.$uriq[count($uriq)-2];
-            $route=$route[$requestMethod][$uri]; 
-            $routeName= explode("@",$route);
-            $className=$routeName[count($routeName)-2];
-            $methodName=$routeName[count($routeName)-1];
-            $object = new $className($db,$requestMethod,$personId);
-            return $object->{$methodName}($personId);
-        }else{
-            $uri = '/' . $uri[count($uri)-1];
+        if($personId !== null || isset($_GET["page"])){
+            $uri = explode("?",$uri);
+            $uri=$uri[count($uri) - 2];   
+        }           
             $route=$route[$requestMethod][$uri];
             $routeName= explode("@",$route);
             $className=$routeName[count($routeName)-2];
             $methodName=$routeName[count($routeName)-1];
             $object = new $className($db,$requestMethod,$personId);
-            return $object->{$methodName}();
-        }
+            return $object->{$methodName}($personId);
+        
     }
 }
 ?>

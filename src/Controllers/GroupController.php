@@ -7,11 +7,12 @@ class GroupController extends Controller{
     public $db;
     protected $requestMethod;
     protected  $personId;
-   
+ 
     public function __construct($db,$requestMethod,$personId){
        parent::__construct(new Group($db));
        $this->requestMethod = $requestMethod;
        $this->personId = $personId;
+     
     } 
     
     public function listing(){
