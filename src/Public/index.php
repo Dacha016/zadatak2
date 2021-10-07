@@ -5,13 +5,10 @@ use App\Controllers\InternController;
 use App\Controllers\MentorController;
 use App\Controllers\GroupController;
 use App\Router\Router;
-//  require_once "../.env";
+$dotenv = Dotenv\Dotenv::createImmutable(trim(__DIR__,"\src\Public"));
+$dotenv->load();
 
-//  $host=getenv("PATH");
- 
-//  var_dump($host);
-//  $host="index";
-//  var_dump($host);
+
 $url= new Router;
 $url->processRequest();
 ?>

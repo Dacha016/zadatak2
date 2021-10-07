@@ -35,10 +35,12 @@ class Router{
             ];
         $requestMethod =strtoupper ($_SERVER["REQUEST_METHOD"]);
         $uri=$_SERVER['REQUEST_URI'];
+        
         $personId= isset($_GET["id"]) ? (int)$_GET["id"]:null;
         if($personId !== null || isset($_GET["page"])){
             $uri = explode("?",$uri);
             $uri=$uri[count($uri) - 2];   
+         
         }           
         $route=$route[$requestMethod][$uri];
         $routeName= explode("@",$route);

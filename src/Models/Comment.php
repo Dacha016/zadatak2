@@ -25,12 +25,15 @@ class Comment extends Model {
             exit($e->getMessage());
         }
     }
-    public function readId(){
+    public function readId($input){
 
-        $q="SELECT  i.idG,m.idG FROM ". $this->table."  c LEFT JOIN mentors m ON c.idM= m.id LEFT JOIN interns i ON c.idI=i.id";
+        $q="SELECT i.id AS INTERN_ID,m.id AS MENTOR_ID, i.idG AS IDG_INTERN, m.idG AS IDG_MENTOR  FROM interns i INNER JOIN mentors m ON m.idG=i.idG WHERE i.id=:idI AND m.id=:idM ;";
         
         try{
             $stmt=$this->conn->prepare($q);
+            
+            $stmt->bindParam(":idM",$input["idM"]);
+            $stmt->bindParam(":idI",$input["idI"]);
             $stmt->execute();
             return $stmt;
         }catch(PDOException $e){

@@ -14,16 +14,10 @@ class CommentController extends Controller{
     } 
     
     protected function validate($input){
-      
-        $result = $this->model->readId();
+ 
+        $result = $this->model->readId($input);
         $row= $result->fetch(PDO::FETCH_ASSOC);
-       $in=[
-           "m.idG"=>$row["m.idG"],
-           "i.idG"=>$row["i.idG"]
-       ];
-       
-       var_dump($in[1]);
-        if($row["m.idG"]!==$row["i.idG"]){
+        if(!$row){
             return false;
         }
         if( ! isset($input['idM']) || $input['idM']==="" || $input['idM']=== null  ){

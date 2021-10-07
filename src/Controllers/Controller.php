@@ -54,6 +54,7 @@ class Controller{
     public function store()
     {
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
+        
         if (! $this->validate( $input)) {
             return $this->unprocessableEntityResponse();
         }
