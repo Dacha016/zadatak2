@@ -53,12 +53,10 @@ class Controller{
 
     public function store()
     {
-        
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
         if (! $this->validate( $input)) {
             return $this->unprocessableEntityResponse();
         }
-        echo"store";
         $this->model->create($input);
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
         return $response;

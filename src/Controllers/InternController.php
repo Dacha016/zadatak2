@@ -25,7 +25,7 @@ class InternController extends Controller{
         $in=[
            "Interns_Surname"=>$row["Interns_Surname"],
            "Interns_Name"=>$row["Interns_Name"],
-           "Groups_Title"=>$row["Groups_Title"]
+           "Comment"=>$row["Comment"]
        ];
        $response['status_code_header'] = 'HTTP/1.1 201 Created';
        echo $response['body'] = json_encode($in);

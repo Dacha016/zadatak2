@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////
 Linux
 
-xampp set up: 
+xampp setup: 
 
 ###############################################
 /opt/lampp/etc/extra/httpd-vhosts.conf
@@ -23,7 +23,7 @@ uncomment line 488
 ////////////////////////////////////////////////////////////////
 Windows
 
-xampp set up:
+xampp setup:
 
 
 open notepad as admin!!!!!!!!!!!!
