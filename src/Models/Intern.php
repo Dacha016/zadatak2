@@ -12,7 +12,7 @@ class Intern extends Model {
     }
     public function read($id){
         // $sort="asc";
-        $q="SELECT i.Surname AS Interns_Surname,i.Name AS Interns_Name,c.Comment AS Comment FROM groups g LEFT JOIN interns i ON g.id= i.idG LEFT JOIN comments c ON c.idI=i.id WHERE i.id=:id ORDER BY Comment ";
+        $q="SELECT g.Title AS Group_Name, i.Surname AS Interns_Surname,i.Name AS Interns_Name,c.Comment AS Comment FROM groups g LEFT JOIN interns i ON g.id= i.idG LEFT JOIN comments c ON c.idI=i.id WHERE i.id=:id ORDER BY Comment DESC";
         try{
             $stmt=$this->conn->prepare($q);
             $stmt->bindParam(":id",$id);

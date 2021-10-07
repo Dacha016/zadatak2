@@ -22,7 +22,7 @@ class GroupController extends Controller{
             while($row= $result->fetch(\PDO::FETCH_ASSOC)){
                 extract($row);
                 $in=[
-                    "Groups_Title"=>$row["Groups_Title"],
+                    "Groups_Name"=>$row["Groups_Name"],
                     "Mentors_Name"=>$row["Mentors_Name"],
                     "Mentors_Surname"=>$row["Mentors_Surname"],
                     "Interns_Name"=>$row["Interns_Name"],

@@ -23,9 +23,10 @@ class MentorController extends Controller{
            return $this->notFoundResponse();
        }
         $in=[
+            "Groups_Name"=>$row["Groups_Name"],
            "Mentors_Surname"=>$row["Mentors_Surname"],
            "Mentors_Name"=>$row["Mentors_Name"],
-           "Groups_Title"=>$row["Groups_Title"]
+           
        ];
        $response['status_code_header'] = 'HTTP/1.1 201 Created';
        echo $response['body'] = json_encode($in);

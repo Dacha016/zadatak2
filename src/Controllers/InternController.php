@@ -23,6 +23,7 @@ class InternController extends Controller{
            return $this->notFoundResponse();
        }
         $in=[
+            "Group_Name"=>$row["Group_Name"],
            "Interns_Surname"=>$row["Interns_Surname"],
            "Interns_Name"=>$row["Interns_Name"],
            "Comment"=>$row["Comment"]
