@@ -14,15 +14,13 @@ class Mentor extends Model{
         $q="SELECT  m.Surname AS Mentors_Surname,m.Name AS Mentors_Name,g.Title AS Groups_Title  FROM ". $this->table."  m LEFT JOIN groups g ON m.idG= g.id WHERE m.id=:id";   
         try{
             $stmt=$this->conn->prepare($q);
-            $stmt->bindParam(":id",trim($id));
+            $stmt->bindParam(":id",$id);
             $stmt->execute();
             return $stmt;
         }catch(PDOException $e){
             exit($e->getMessage());
         }
     }
-    public function commentar(){
-        
-    }
+
 }
 ?>

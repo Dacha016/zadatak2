@@ -21,6 +21,18 @@ class Group extends Model{
         }
     }
 
+    public function read($id){
+        $q="SELECT * FROM ". $this->table."  WHERE id=:id";   
+        try{
+            $stmt=$this->conn->prepare($q);
+            $stmt->bindParam(":id",$id);
+            $stmt->execute();
+            return $stmt;
+        }catch(PDOException $e){
+            exit($e->getMessage());
+        }
+    }
+
     public  function create(Array $p){
         $q="INSERT INTO ".$this->table. " (Title) VALUES (:title )";
         try{

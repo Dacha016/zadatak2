@@ -34,13 +34,14 @@ class Router{
                 "/groups/id"=>"App\Controllers\GroupController@destroy"]
             ];
         $requestMethod =strtoupper ($_SERVER["REQUEST_METHOD"]);
+        var_dump($requestMethod);
         $uri=$_SERVER['REQUEST_URI'];
         
         $personId= isset($_GET["id"]) ? (int)$_GET["id"]:null;
         if($personId !== null || isset($_GET["page"])){
             $uri = explode("?",$uri);
             $uri=$uri[count($uri) - 2];   
-         
+            var_dump($uri);
         }           
         $route=$route[$requestMethod][$uri];
         $routeName= explode("@",$route);

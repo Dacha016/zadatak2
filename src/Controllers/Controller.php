@@ -54,7 +54,6 @@ class Controller{
     public function store()
     {
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
-        
         if (! $this->validate( $input)) {
             return $this->unprocessableEntityResponse();
         }
@@ -78,7 +77,7 @@ class Controller{
         return $response;
     }
 
-    public function delete($modelId){
+    public function destroy($modelId){
         $result = $this->model->read($modelId);
         $row= $result->fetch(PDO::FETCH_ASSOC);
         if (! $row) {
@@ -91,6 +90,7 @@ class Controller{
     }
 
     protected function validate($input){
+       
         if (! isset($input['Name']) || $input['Name']==="" || $input['Name']=== null || !ctype_alpha($input['Name']) ) {
             return false;
         }

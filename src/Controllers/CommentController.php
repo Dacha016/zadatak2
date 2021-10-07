@@ -14,7 +14,6 @@ class CommentController extends Controller{
     } 
     
     protected function validate($input){
- 
         $result = $this->model->readId($input);
         $row= $result->fetch(PDO::FETCH_ASSOC);
         if(!$row){
@@ -26,7 +25,6 @@ class CommentController extends Controller{
         if( ! isset($input['idI']) || $input['idI']==="" || $input['idI']=== null  ){
             return false;
         }
-
         return true;
     }
 }
