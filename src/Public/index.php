@@ -5,7 +5,8 @@ use App\Controllers\InternController;
 use App\Controllers\MentorController;
 use App\Controllers\GroupController;
 use App\Router\Router;
-$dotenv = Dotenv\Dotenv::createImmutable(trim(__DIR__,"\src\Public"));
+
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__,2));
 $dotenv->load();
 
 
