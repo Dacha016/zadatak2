@@ -38,10 +38,11 @@ class Router{
         $uri=$_SERVER['REQUEST_URI'];
         
         $personId= isset($_GET["id"]) ? (int)$_GET["id"]:null;
-        if($personId !== null || isset($_GET["page"])){
+        if($personId !== null || isset($_GET["page"]) || isset($_GET["sort_by"])){
             $uri = explode("?",$uri);
+           
             $uri=$uri[count($uri) - 2];   
-            var_dump($uri);
+           var_dump($uri);
         }           
         $route=$route[$requestMethod][$uri];
         $routeName= explode("@",$route);
