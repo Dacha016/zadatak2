@@ -25,7 +25,7 @@ class Controller{
                 array_push($inArr,$in);
             }
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
-        echo $response['body'] = json_encode($inArr);
+        $response['body'] = json_encode($inArr);
         return $response;
          }
     }

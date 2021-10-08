@@ -14,21 +14,22 @@ class InternController extends Controller{
     }    
     public function show($modelId){
         $result = $this->model->read($modelId);
-        if (! $result) {
-           return $this->notFoundResponse();
-       }
-        $row= $result->fetch(PDO::FETCH_ASSOC);
-        if (! $row) {
-           return $this->notFoundResponse();
-       }
-        $in=[
-            "Group_Name"=>$row["Group_Name"],
-            "Interns_Surname"=>$row["Interns_Surname"],
-            "Interns_Name"=>$row["Interns_Name"],
-            "Comment"=>$row["Comment"]
-       ];
-       $response['status_code_header'] = 'HTTP/1.1 201 Created';
-       echo $response['body'] = json_encode($in);
-       return $response;
+        $n=$result->rowCount();
+        if($n>0){
+            $inArr=[];
+            while($row= $result->fetch(PDO::FETCH_ASSOC)){
+                extract($row);
+                $in=[
+                    "Group_Name"=>$row["Group_Name"],
+                    "Interns_Surname"=>$row["Interns_Surname"],
+                    "Interns_Name"=>$row["Interns_Name"],
+                    "Comment"=>$row["Comment"]
+                ];
+                array_push($inArr,$in);
+            }
+        $response['status_code_header'] = 'HTTP/1.1 201 Created';
+        $response['body'] = json_encode($inArr);
+        return $response;
+         }
    }
 }
