@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Oct 07, 2021 at 12:51 AM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.10
+-- Host: 127.0.0.1
+-- Generation Time: Oct 08, 2021 at 03:07 PM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 8.0.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -40,7 +40,25 @@ CREATE TABLE `comments` (
 
 INSERT INTO `comments` (`id`, `Comment`, `idM`, `idI`) VALUES
 (1, 'Zadatak je OK', 1, 1),
-(2, 'Preuredi zadatak', 1, 1);
+(2, 'Preuredi zadatak', 1, 1),
+(3, 'Neki komentar', 1, 1),
+(4, 'Neki komentar', 1, 1),
+(5, 'Neki komentar', 1, 1),
+(6, 'Neki komentar', 1, 1),
+(7, 'Neki komentar', 1, 1),
+(8, 'Neki komentar2', 1, 1),
+(9, 'Neki komentar2', 1, 2),
+(10, 'Neki komentar3', 1, 2),
+(11, 'Neki komentar3', 1, 2),
+(12, 'Neki komentar3', 1, 2),
+(13, 'Neki komentar3', 1, 2),
+(14, 'Neki komentar4', 1, 2),
+(15, 'Neki komentar4', 1, 2),
+(16, 'Neki komentar4', 1, 2),
+(17, 'Neki komentar45', 1, 2),
+(18, 'Neki komentar45', 1, 2),
+(19, 'Neki komentar45', 1, 2),
+(20, 'radi!!!', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -131,13 +149,15 @@ ALTER TABLE `groups`
 -- Indexes for table `interns`
 --
 ALTER TABLE `interns`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_Intern` (`idG`);
 
 --
 -- Indexes for table `mentors`
 --
 ALTER TABLE `mentors`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_Mentor` (`idG`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -147,7 +167,7 @@ ALTER TABLE `mentors`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `groups`
@@ -166,6 +186,22 @@ ALTER TABLE `interns`
 --
 ALTER TABLE `mentors`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `interns`
+--
+ALTER TABLE `interns`
+  ADD CONSTRAINT `FK_Intern` FOREIGN KEY (`idG`) REFERENCES `groups` (`id`);
+
+--
+-- Constraints for table `mentors`
+--
+ALTER TABLE `mentors`
+  ADD CONSTRAINT `FK_Mentor` FOREIGN KEY (`idG`) REFERENCES `groups` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

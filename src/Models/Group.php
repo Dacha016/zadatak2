@@ -57,15 +57,11 @@ class Group extends Model{
         }
     }
     public function groupListing(){
-        $total = $this->conn->query("SELECT count(*) FROM ". $this->table."  g LEFT JOIN mentors m ON g.id=m.idG LEFT JOIN interns i ON g.id=i.idG  ")->fetchColumn();
         $limit =30;
-      
-    
+        $sort = isset($_GET['order']) && strtolower($_GET['order']) == 'desc' ? 'DESC' : 'ASC';
         $page = (isset($_GET['page']) && $_GET['page'] > 0) ? intval($_GET['page']) : 1;
-        var_dump($page);
         $offset = abs($page - 1)  * $limit;
-        var_dump($offset);
-        $q="SELECT g.Title AS Groups_Name, m.Name AS Mentors_Name, m.Surname AS Mentors_Surname,i.Name AS Interns_Name,i.Surname AS Interns_Surname FROM ". $this->table."  g LEFT JOIN mentors m ON g.id=m.idG LEFT JOIN interns i ON g.id=i.idG ORDER BY g.Title LIMIT :limit OFFSET :offset";
+        $q="SELECT g.Title AS Groups_Name, m.Name AS Mentors_Name, m.Surname AS Mentors_Surname,i.Name AS Interns_Name,i.Surname AS Interns_Surname FROM ". $this->table."  g LEFT JOIN mentors m ON g.id=m.idG LEFT JOIN interns i ON g.id=i.idG ORDER BY g.Title ".$sort." LIMIT :limit OFFSET :offset";
         try{
             $stmt=$this->conn->prepare($q);
             $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
