@@ -17,6 +17,7 @@ class GroupController extends Controller{
     public function listing(){
         $result = $this->model->groupListing();
         $n=$result->rowCount();
+        var_dump($n);
         if($n>0){
             $inArr=[];
             while($row= $result->fetch(\PDO::FETCH_ASSOC)){
@@ -55,17 +56,24 @@ class GroupController extends Controller{
     }
     public function show($modelId){
         $result = $this->model->read($modelId);
-        if (! $result){
-           return $this->notFoundResponse();
+        $n=$result->rowCount();
+        if($n>0){
+            $inArr=[];
+            while($row= $result->fetch(\PDO::FETCH_ASSOC)){
+                extract($row);
+                $in=[
+                    "Groups_Name"=>$row["Groups_Name"],
+                    "Mentors_Name"=>$row["Mentors_Name"],
+                    "Mentors_Surname"=>$row["Mentors_Surname"],
+                    "Interns_Name"=>$row["Interns_Name"],
+                    "Interns_Surname"=>$row["Interns_Surname"]
+                ];
+                array_push($inArr,$in);
+            }
+        echo $response['body'] = json_encode($inArr);
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        return $response;
         }
-        $row= $result->fetch(PDO::FETCH_ASSOC);
-        $in=[
-            "id"=>$row["id"],
-            "Title"=>$row["Title"]
-        ];
-       echo $response['body'] = json_encode($in);
-       $response['status_code_header'] = 'HTTP/1.1 200 OK';
-       return $response;
     }
   
     protected function validate($input){

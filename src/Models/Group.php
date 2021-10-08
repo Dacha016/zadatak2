@@ -22,7 +22,7 @@ class Group extends Model{
     }
 
     public function read($id){
-        $q="SELECT * FROM ". $this->table."  WHERE id=:id";   
+        $q="SELECT g.Title AS Groups_Name, m.Name AS Mentors_Name, m.Surname AS Mentors_Surname,i.Name AS Interns_Name,i.Surname AS Interns_Surname FROM ". $this->table."  g LEFT JOIN mentors m ON g.id=m.idG LEFT JOIN interns i ON g.id=i.idG WHERE g.id=:id";   
         try{
             $stmt=$this->conn->prepare($q);
             $stmt->bindParam(":id",$id);
@@ -57,8 +57,8 @@ class Group extends Model{
         }
     }
     public function groupListing(){
-        $total = $this->conn->query("SELECT COUNT(*) FROM ".$this->table)->fetchColumn();
-        $limit = 2;
+        $total = $this->conn->query("SELECT count(*) FROM ". $this->table."  g LEFT JOIN mentors m ON g.id=m.idG LEFT JOIN interns i ON g.id=i.idG  ")->fetchColumn();
+        $limit = 19;
         $pages = ceil($total / $limit);
         $page =(int)  min($pages, filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT, array('default'   => 1)));
         $offset = abs($page - 1)  * $limit;
