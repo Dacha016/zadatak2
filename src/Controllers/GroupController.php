@@ -17,7 +17,6 @@ class GroupController extends Controller{
     public function listing(){
         $result = $this->model->groupListing();
         $n=$result->rowCount();
-        var_dump($n);
         if($n>0){
             $inArr=[];
             while($row= $result->fetch(\PDO::FETCH_ASSOC)){
