@@ -17,15 +17,14 @@ class MentorController extends Controller{
         if (! $result) {
            return $this->notFoundResponse();
        }
-       $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $row= $result->fetch(PDO::FETCH_ASSOC);
         if (! $row) {
            return $this->notFoundResponse();
        }
         $in=[
             "Groups_Name"=>$row["Groups_Name"],
-           "Mentors_Surname"=>$row["Mentors_Surname"],
-           "Mentors_Name"=>$row["Mentors_Name"],
+            "Mentors_Surname"=>$row["Mentors_Surname"],
+            "Mentors_Name"=>$row["Mentors_Name"],
            
        ];
        $response['status_code_header'] = 'HTTP/1.1 201 Created';

@@ -33,11 +33,10 @@ class GroupController extends Controller{
         echo $response['body'] = json_encode($inArr);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         return $response;
-         }
+        }
     }
     public function index(){
         $result = $this->model->readAll();
-        $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $n=$result->rowCount();
         if($n>0){
             $inArr=[];
@@ -52,22 +51,22 @@ class GroupController extends Controller{
         echo $response['body'] = json_encode($inArr);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         return $response;
-         }
+        }
     }
     public function show($modelId){
         $result = $this->model->read($modelId);
-        if (! $result) {
+        if (! $result){
            return $this->notFoundResponse();
-       }
+        }
         $row= $result->fetch(PDO::FETCH_ASSOC);
         $in=[
             "id"=>$row["id"],
             "Title"=>$row["Title"]
-       ];
+        ];
        echo $response['body'] = json_encode($in);
        $response['status_code_header'] = 'HTTP/1.1 200 OK';
        return $response;
-   }
+    }
   
     protected function validate($input){
         if( ! isset($input['Title']) || $input['Title']==="" || $input['Title']=== null ){
